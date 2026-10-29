@@ -1,6 +1,8 @@
+import type { StatusCounts } from '../digest/counts.js';
 import type { Status } from '../status.js';
 
-export function StatusBoard({ status }: { status: Status }) {
+// counts[night] is null when that night's file could not be read.
+export function StatusBoard({ status, counts = {} }: { status: Status; counts?: Record<string, StatusCounts | null> }) {
   return (
     <>
       <h1>status</h1>
@@ -20,7 +22,15 @@ export function StatusBoard({ status }: { status: Status }) {
       ) : (
         <ul>
           {status.nights.map((n) => (
-            <li>{n}</li>
+            <li>
+              <a href={`/digest/${n}`}>{n}</a>{' '}
+              <span class="mute">
+                {counts[n]
+                  ? `ok ${counts[n].ok} · retry ${counts[n].retry} · fail ${counts[n].fail}`
+                  : '—'}{' '}
+                (jobs by last status)
+              </span>
+            </li>
           ))}
         </ul>
       )}
