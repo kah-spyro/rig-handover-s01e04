@@ -38,10 +38,3 @@ export interface Night {
  * An empty file gives rows: [] and badLines: 0.
  */
 export type ReadNight = (runsDir: string, night: string) => Night | null;
-
-/**
- * Signature only, for type-checking against. This is a declaration: it has no runtime value,
- * so don't import it from here at runtime. The implementation lands in src/digest/ (§ 1)
- * and must match ReadNight.
- */
-export declare function readNight(runsDir: string, night: string): Night | null;
