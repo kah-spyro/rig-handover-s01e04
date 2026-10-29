@@ -38,5 +38,12 @@ export function createApp(config: RigConfig = loadConfig()) {
     );
   });
 
+  // Same Night object the page renders (ADR 0001): no re-sort, no transform.
+  app.get('/api/digest/:night', (c) => {
+    const night = readNight(config.runsDir, c.req.param('night'));
+    if (!night) return c.json({ error: 'no such night' }, 404);
+    return c.json(night);
+  });
+
   return app;
 }
